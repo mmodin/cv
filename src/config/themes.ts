@@ -1,4 +1,4 @@
-export const defaultTheme = "console-green";
+export const defaultTheme = "console";
 
 export const themeOptions = [
   {

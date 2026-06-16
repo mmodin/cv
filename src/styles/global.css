@@ -493,7 +493,7 @@ h3 {
   width: 210mm;
   min-height: 297mm;
   margin: 0 auto;
-  padding: 18mm;
+  padding: 14mm 16mm;
   background: white;
   color: #141817;
   font-size: 10.5pt;
@@ -546,7 +546,6 @@ address {
 }
 
 .print-page section {
-  break-inside: avoid;
   border-bottom: 1px solid #e1e5e2;
   padding: 11px 0;
 }
@@ -570,6 +569,10 @@ address {
 
 .print-entry + .print-entry {
   margin-top: 8px;
+}
+
+.print-entry {
+  break-inside: avoid;
 }
 
 .print-entry p,
