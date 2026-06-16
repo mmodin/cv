@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  variant?: "default" | "two-column";
+}
+
+const { title, variant = "default" } = Astro.props;
+const id = `${title.toLowerCase().replaceAll(" ", "-")}-title`;
+---
+
+<section
+  class:list={["section-grid", variant === "two-column" && "two-column"]}
+  aria-labelledby={id}
+>
+  <h2 id={id}>{title}</h2>
+  <slot />
+</section>

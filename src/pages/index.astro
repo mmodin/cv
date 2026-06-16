@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EducationList from "../components/EducationList.astro";
+import ExperienceEntry from "../components/ExperienceEntry.astro";
+import HighlightList from "../components/HighlightList.astro";
+import Intro from "../components/Intro.astro";
+import LanguageList from "../components/LanguageList.astro";
+import ProjectEntry from "../components/ProjectEntry.astro";
+import Section from "../components/Section.astro";
+import SkillGroups from "../components/SkillGroups.astro";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import {
+  education,
+  experience,
+  highlights,
+  languages,
+  profile,
+  projects,
+  skillGroups,
+} from "../data/cv";
+
+const pdfHref = import.meta.env.DEV
+  ? `${import.meta.env.BASE_URL}print/`
+  : `${import.meta.env.BASE_URL}cv.pdf`;
+const pdfLabel = import.meta.env.DEV ? "Open Print View" : "Download PDF";
+---
+
+<BaseLayout
+  title={`${profile.name} - ${profile.role}`}
+  description={profile.summary}
+>
+  {import.meta.env.DEV && <ThemeSwitcher />}
+  <main class="site-shell">
+    <Intro profile={profile} pdfHref={pdfHref} pdfLabel={pdfLabel} />
+
+    <Section title="Highlights">
+      <HighlightList items={highlights} />
+    </Section>
+
+    <Section title="Experience">
+      <div class="stack">
+        {experience.map((job) => <ExperienceEntry item={job} />)}
+      </div>
+    </Section>
+
+    <Section title="Selected Work">
+      <div class="stack">
+        {projects.map((project) => <ProjectEntry item={project} />)}
+      </div>
+    </Section>
+
+    <Section title="Skills">
+      <SkillGroups groups={skillGroups} />
+    </Section>
+
+    <Section title="Details" variant="two-column">
+      <div>
+        <h3>Education</h3>
+        <EducationList items={education} />
+      </div>
+      <div>
+        <h3>Languages</h3>
+        <LanguageList items={languages} />
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

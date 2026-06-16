@@ -1,0 +1,23 @@
+---
+import TagList from "./TagList.astro";
+
+interface Props {
+  groups: {
+    label: string;
+    items: string[];
+  }[];
+}
+
+const { groups } = Astro.props;
+---
+
+<div class="skill-groups">
+  {
+    groups.map((group) => (
+      <section class="skill-group" aria-label={group.label}>
+        <h3>{group.label}</h3>
+        <TagList items={group.items} />
+      </section>
+    ))
+  }
+</div>

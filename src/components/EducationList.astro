@@ -1,0 +1,22 @@
+---
+interface Props {
+  items: {
+    school: string;
+    degree?: string;
+    degrees?: string[];
+    period: string;
+  }[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+  items.map((item) => (
+    <p class="education">
+      <strong>{item.school}</strong>
+      {(item.degrees ?? [item.degree]).map((degree) => <span>{degree}</span>)}
+      <span>{item.period}</span>
+    </p>
+  ))
+}

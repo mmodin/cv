@@ -1,0 +1,26 @@
+---
+interface Props {
+  item: {
+    company: string;
+    role: string;
+    location: string;
+    period: string;
+    achievements: string[];
+  };
+}
+
+const { item } = Astro.props;
+---
+
+<article class="entry">
+  <div class="entry__header">
+    <div>
+      <h3>{item.role}</h3>
+      <p>{item.company} · {item.location}</p>
+    </div>
+    <span>{item.period}</span>
+  </div>
+  <ul>
+    {item.achievements.map((achievement) => <li>{achievement}</li>)}
+  </ul>
+</article>

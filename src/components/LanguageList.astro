@@ -1,0 +1,15 @@
+---
+interface Props {
+  items: {
+    language: string;
+    level: string;
+  }[];
+}
+
+const { items } = Astro.props;
+const languageSummary = items
+  .map((item) => `${item.language} ${item.level}`)
+  .join(" · ");
+---
+
+<p class="language-inline">{languageSummary}</p>

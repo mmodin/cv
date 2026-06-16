@@ -1,0 +1,25 @@
+---
+import TagList from "./TagList.astro";
+
+interface Props {
+  item: {
+    name: string;
+    description: string;
+    href?: string;
+    tags: string[];
+  };
+}
+
+const { item } = Astro.props;
+---
+
+<article class="entry">
+  <div class="entry__header">
+    <div>
+      <h3>{item.name}</h3>
+      <p>{item.description}</p>
+    </div>
+    {item.href && <a href={item.href}>View</a>}
+  </div>
+  <TagList items={item.tags} />
+</article>

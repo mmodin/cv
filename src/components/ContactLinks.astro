@@ -1,0 +1,28 @@
+---
+interface ContactLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  email: string;
+  phone: string;
+  website: string;
+  links: ContactLink[];
+}
+
+const { email, phone, website, links } = Astro.props;
+---
+
+<aside class="contact-panel" aria-label="Contact details">
+  <a href={`mailto:${email}`}>{email}</a>
+  <a href={`tel:${phone.replaceAll(" ", "")}`}>{phone}</a>
+  <a href={website}>{website.replace(/^https?:\/\//, "")}</a>
+  {
+    links.map((link) => (
+      <a href={link.href} rel="noreferrer">
+        {link.label}
+      </a>
+    ))
+  }
+</aside>

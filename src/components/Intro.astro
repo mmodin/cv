@@ -1,0 +1,40 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import ContactLinks from "./ContactLinks.astro";
+
+interface Props {
+  profile: {
+    name: string;
+    role: string;
+    location: string;
+    summary: string;
+    email: string;
+    phone: string;
+    website: string;
+    links: { label: string; href: string }[];
+  };
+  pdfHref: string;
+  pdfLabel: string;
+}
+
+const { profile, pdfHref, pdfLabel } = Astro.props;
+---
+
+<section class="intro">
+  <div class="intro__content">
+    <p class="eyebrow">{profile.location}</p>
+    <h1>{profile.name}</h1>
+    <p class="role">{profile.role}</p>
+    <p class="summary">{profile.summary}</p>
+    <div class="actions" aria-label="Primary actions">
+      <ButtonLink href={pdfHref} variant="primary">{pdfLabel}</ButtonLink>
+      <ButtonLink href={`mailto:${profile.email}`}>Email</ButtonLink>
+    </div>
+  </div>
+  <ContactLinks
+    email={profile.email}
+    phone={profile.phone}
+    website={profile.website}
+    links={profile.links}
+  />
+</section>

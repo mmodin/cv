@@ -1,0 +1,25 @@
+{
+  "name": "cv",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "pdf": "PLAYWRIGHT_BROWSERS_PATH=0 node scripts/build-pdf.mjs",
+    "pdf:install": "PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium"
+  },
+  "dependencies": {
+    "astro": "6.4.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "playwright": "1.61.0",
+    "typescript": "6.0.3"
+  },
+  "overrides": {
+    "esbuild": "0.28.1",
+    "yaml": "2.9.0"
+  }
+}

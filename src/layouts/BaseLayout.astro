@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import { defaultTheme, themeOptions } from "../config/themes";
+
+interface Props {
+  title?: string;
+  description?: string;
+  printable?: boolean;
+}
+
+const {
+  title = "CV",
+  description = "Personal CV and resume download.",
+  printable = false,
+} = Astro.props;
+
+const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`;
+const themeIds = themeOptions.map((theme) => theme.id);
+---
+
+<!doctype html>
+<html
+  lang="en"
+  data-theme={defaultTheme}
+  class:list={[printable && "printable"]}
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <title>{title}</title>
+    {
+      !printable && (
+        <script is:inline define:vars={{ defaultTheme, themeIds }}>
+          const themeParams = new URLSearchParams(window.location.search);
+          const queryTheme = themeParams.get("theme");
+          const storedTheme = window.localStorage.getItem("cv-theme");
+          const chosenTheme = themeIds.includes(queryTheme)
+            ? queryTheme
+            : themeIds.includes(storedTheme)
+              ? storedTheme
+              : defaultTheme;
+
+          document.documentElement.dataset.theme = chosenTheme;
+
+          if (queryTheme && themeIds.includes(queryTheme)) {
+            window.localStorage.setItem("cv-theme", queryTheme);
+          }
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+import { defaultTheme, themeOptions } from "../config/themes";
+---
+
+<nav class="theme-switcher" aria-label="Theme preview">
+  <span>Theme</span>
+  {
+    themeOptions.map((theme) => (
+      <a
+        class="theme-switcher__button"
+        data-theme-option={theme.id}
+        href={`?theme=${theme.id}`}
+        title={theme.description}
+      >
+        {theme.label}
+      </a>
+    ))
+  }
+</nav>
+
+<script is:inline define:vars={{ defaultTheme }}>
+  const validThemes = new Set(
+    Array.from(document.querySelectorAll("[data-theme-option]")).map(
+      (item) => item.dataset.themeOption,
+    ),
+  );
+
+  function readTheme() {
+    const queryTheme = new URLSearchParams(window.location.search).get("theme");
+    const storedTheme = window.localStorage.getItem("cv-theme");
+
+    if (queryTheme && validThemes.has(queryTheme)) {
+      window.localStorage.setItem("cv-theme", queryTheme);
+      return queryTheme;
+    }
+
+    if (storedTheme && validThemes.has(storedTheme)) {
+      return storedTheme;
+    }
+
+    return defaultTheme;
+  }
+
+  function updateSwitcher(theme) {
+    document.querySelectorAll("[data-theme-option]").forEach((item) => {
+      item.toggleAttribute("aria-current", item.dataset.themeOption === theme);
+    });
+  }
+
+  updateSwitcher(readTheme());
+</script>

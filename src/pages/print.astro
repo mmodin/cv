@@ -1,0 +1,111 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  education,
+  experience,
+  highlights,
+  languages,
+  profile,
+  projects,
+  skillGroups,
+} from "../data/cv";
+
+const languageSummary = languages
+  .map((item) => `${item.language} ${item.level}`)
+  .join(" · ");
+---
+
+<BaseLayout
+  title={`${profile.name} - CV`}
+  description={profile.summary}
+  printable
+>
+  <main class="print-page">
+    <header class="print-header">
+      <div>
+        <h1>{profile.name}</h1>
+        <p>{profile.role}</p>
+      </div>
+      <address>
+        <span>{profile.location}</span>
+        <span>{profile.email}</span>
+        <span>{profile.phone}</span>
+        <span>{profile.website.replace(/^https?:\/\//, "")}</span>
+      </address>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p>{profile.summary}</p>
+    </section>
+
+    <section>
+      <h2>Highlights</h2>
+      <ul>
+        {highlights.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      {
+        experience.map((job) => (
+          <article class="print-entry">
+            <div class="print-entry__header">
+              <h3>{job.role}, {job.company}</h3>
+              <span>{job.period}</span>
+            </div>
+            <p>{job.location}</p>
+            <ul>
+              {job.achievements.map((achievement) => <li>{achievement}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Selected Work</h2>
+      {
+        projects.map((project) => (
+          <article class="print-entry">
+            <h3>{project.name}</h3>
+            <p>{project.description}</p>
+            <p>{project.tags.join(" · ")}</p>
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="print-columns">
+      <div>
+        <h2>Skills</h2>
+        {
+          skillGroups.map((group) => (
+            <p class="print-skill-group">
+              <strong>{group.label}:</strong> {group.items.join(" · ")}
+            </p>
+          ))
+        }
+      </div>
+      <div>
+        <h2>Education</h2>
+        {
+          education.map((item) => (
+            <p>
+              <strong>{item.school}</strong><br />
+              {(item.degrees ?? [item.degree]).map((degree) => (
+                <>
+                  {degree}<br />
+                </>
+              ))}
+              {item.period}
+            </p>
+          ))
+        }
+        <h2>Languages</h2>
+        <p class="print-language">{languageSummary}</p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
